@@ -443,11 +443,10 @@ func NewProof(f *PrimeField, inp *big.Int, steps *big.Int, round_constants []*bi
 	p.Child = make([]*FriComponent, 0)
 	var l_mtree [][]byte
 	var positions []*big.Int
-	var err2 error
 	wg.Add(1)
 	go func() {
 		l_mtree = merkelize(l_evaluations)
-		positions, err2 = get_pseudorandom_indices(f, l_mtree[1], precision, spot_check_security_factor, int64(extension_factor))
+		positions, _ = get_pseudorandom_indices(f, l_mtree[1], precision, spot_check_security_factor, int64(extension_factor))
 		p.LRoot = l_mtree[1] // Merkle Root
 		wg.Done()
 		fmt.Printf("(10) Merkelized l_evaluations, Setup Spot check positions [%s => %s]\n", time.Since(start), time.Since(start0))
